@@ -1925,6 +1925,8 @@ class fcpoRequest extends oxSuperCfg
      */
     public function sendRequestConsumerscore($oUser) 
     {
+        $aResponse = array('scorevalue' => 500, 'fcWrongCountry' => true);
+
         // Consumerscore only allowed in germany
         if ($this->getCountryIso2($oUser->oxuser__oxcountryid->value) == 'DE') {
             $oConfig = $this->getConfig();
@@ -1945,11 +1947,9 @@ class fcpoRequest extends oxSuperCfg
 
             $aResponse = $this->send();
             $aResponse = $this->_fcpoCheckUseFallbackBoniversum($aResponse);
-        } else {
-            // Ampel Gruen Response simulieren
-            $aResponse = array('scorevalue' => 500, 'fcWrongCountry' => true);
-            return $aResponse;
         }
+        
+        return $aResponse;
     }
 
     /**
